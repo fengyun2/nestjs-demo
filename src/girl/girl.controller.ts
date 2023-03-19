@@ -35,4 +35,20 @@ export class GirlController {
     const id: number = parseInt(params.id);
     return this.girlService.getGirlById(id);
   }
+  @Get('/delete/:id')
+  deleteGirl(@Param() params): any {
+    const id: number = parseInt(params.id, 10);
+    return this.girlService.delGirl(id);
+  }
+  @Get('/update/:id')
+  updateGirl(@Param() params): any {
+    const id: number = parseInt(params.id, 10);
+    return this.girlService.updateGirl(id);
+  }
+  @Get('findGirlByName/:name')
+  findGirlByName(@Param() params): any {
+    console.log(params.name);
+    const name: string = params.name;
+    return this.girlService.getGirlByName(name);
+  }
 }
