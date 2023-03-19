@@ -24,3 +24,6 @@ GET http://localhost:3000/api/girl HTTP/1.1
 
 ###
 GET http://localhost:3000/api/girl/findGirlByName/晓 HTTP/1.1
+
+###
+GET http://localhost:3000/api/girl/hotLoad HTTP/1.1

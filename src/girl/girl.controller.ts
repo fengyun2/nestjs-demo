@@ -51,4 +51,8 @@ export class GirlController {
     const name: string = params.name;
     return this.girlService.getGirlByName(name);
   }
+  @Get('/hotLoad')
+  hotLoad(): any {
+    return 'HotLoad Function';
+  }
 }
