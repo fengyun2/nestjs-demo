@@ -18,7 +18,7 @@ export class Girl {
   @Column({ type: 'int' })
   age: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', default: '' })
   skill: string;
 
   @CreateDateColumn({ type: 'timestamp' })

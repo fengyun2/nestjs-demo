@@ -18,17 +18,22 @@ export class GirlService {
     return this.girl.find();
   }
   // 新增一个女孩
-  addGirl() {
-    // return {
-    //   code: 200,
-    //   data: { id: 1, name: '晓彤', age: 16 },
-    //   msg: '女孩添加成功',
-    // };
-    const data = new Girl();
-    data.name = '晓彤';
-    data.age = 16;
-    data.skill = '撒娇卖萌，么么哒';
-    return this.girl.save(data);
+  async addGirl(girl: Partial<Girl>): Promise<Girl> {
+    // const data = new Girl();
+    // data.name = '晓彤';
+    // data.age = 16;
+    // data.skill = '撒娇卖萌，么么哒';
+    // return this.girl.save(data);
+
+    const { name } = girl;
+    if (!name) {
+      throw new HttpException('缺少名称', 401);
+    }
+    const existGirl = await this.girl.findOne({ where: { name } });
+    if (existGirl) {
+      throw new HttpException(`${name} 女孩已存在`, 401);
+    }
+    return this.girl.save(girl);
   }
   getGirlById(id: number): Promise<Girl> {
     return this.girl.findOne({ where: { id } });

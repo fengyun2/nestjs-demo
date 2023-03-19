@@ -4,6 +4,7 @@ import * as cors from 'cors';
 import { HttpExceptionFilter } from './core/filter/http-exception/http-exception.filter';
 import { TransformInterceptor } from './core/interceptor/transform/transform.interceptor';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ValidationPipe } from './core/pipes/validation/validation.pipe';
 
 function MiddleWareAll(req: any, res: any, next: any) {
   console.log('我是全局中间件...');
@@ -32,6 +33,9 @@ async function bootstrap() {
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, swaggerDocument);
   // 文档访问地址：http://localhost:3000/docs
+
+  // 注册管道验证dto
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
 

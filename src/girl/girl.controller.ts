@@ -31,7 +31,7 @@ export class GirlController {
   @Post('/add')
   addGirl(@Body() body: CreateGirlDto): any {
     console.log(body);
-    return this.girlService.addGirl();
+    return this.girlService.addGirl(body);
   }
   @ApiOperation({ summary: '根据id获取女孩信息' })
   @Get('/getGirlById')
