@@ -9,10 +9,14 @@ import {
   Headers,
 } from '@nestjs/common';
 import { GirlService } from './girl.service';
+import { BoyService } from './../boy/boy.service';
 
 @Controller('girl')
 export class GirlController {
-  constructor(private girlService: GirlService) {}
+  constructor(
+    private girlService: GirlService,
+    private boyService: BoyService,
+  ) {}
   @Get()
   getGirls(): any {
     return this.girlService.getGirls();
@@ -58,5 +62,9 @@ export class GirlController {
   @Get('/corstest')
   corsTest(): object {
     return { code: 0, message: '测试跨域请求成功' };
+  }
+  @Get('/test')
+  test(): string {
+    return this.boyService.findAll();
   }
 }
