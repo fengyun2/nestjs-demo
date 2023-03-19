@@ -22,7 +22,10 @@ export class Girl {
   skill: string;
 
   @CreateDateColumn({ type: 'timestamp' })
-  entryTime: Date;
+  create_time: Date;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  updated_time: Date;
 
   @Generated('uuid')
   uuid: string;

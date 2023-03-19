@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Girl } from './entities/girl.entity';
@@ -30,31 +30,42 @@ export class GirlService {
     data.skill = '撒娇卖萌，么么哒';
     return this.girl.save(data);
   }
-  getGirlById(id: number): any {
-    let reJson: any = {};
-    switch (id) {
-      case 1:
-        reJson = { id: 1, name: '翠花', age: 18 };
-        break;
-      case 2:
-        reJson = { id: 2, name: '小红', age: 20 };
-        break;
-      case 3:
-        reJson = { id: 3, name: '大丫', age: 23 };
-        break;
-    }
-    return reJson;
+  getGirlById(id: number): Promise<Girl> {
+    return this.girl.findOne({ where: { id } });
+    // let reJson: any = {};
+    // switch (id) {
+    //   case 1:
+    //     reJson = { id: 1, name: '翠花', age: 18 };
+    //     break;
+    //   case 2:
+    //     reJson = { id: 2, name: '小红', age: 20 };
+    //     break;
+    //   case 3:
+    //     reJson = { id: 3, name: '大丫', age: 23 };
+    //     break;
+    // }
+    // return reJson;
   }
   // 删除一个女孩
-  delGirl(id: number) {
-    return this.girl.delete(id);
+  async delGirl(id: number) {
+    const existGirl = await this.girl.findOne({ where: { id } });
+    if (!existGirl) {
+      throw new HttpException(`id为${id}的女孩不存在`, 401);
+    }
+    return this.girl.remove(existGirl);
+    // return this.girl.delete(id);
   }
   // 修改一个女孩
-  updateGirl(id: number) {
+  async updateGirl(id: number): Promise<Girl> {
+    const existGirl = await this.girl.findOne({ where: { id } });
+    if (!existGirl) {
+      throw new HttpException(`id为${id}的女孩不存在`, 401);
+    }
     const data = new Girl();
     data.name = '王小丫';
     data.age = 18;
-    return this.girl.update(id, data);
+    const updateGirl = this.girl.merge(existGirl, data);
+    return this.girl.save(updateGirl);
   }
   // 根据项目查找一个女孩的信息
   getGirlByName(name: string) {
