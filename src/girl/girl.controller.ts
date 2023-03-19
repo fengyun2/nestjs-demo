@@ -7,6 +7,7 @@ import {
   Body,
   Param,
   Headers,
+  Inject,
 } from '@nestjs/common';
 import { GirlService } from './girl.service';
 import { BoyService } from './../boy/boy.service';
@@ -15,6 +16,7 @@ import { BoyService } from './../boy/boy.service';
 export class GirlController {
   constructor(
     private girlService: GirlService,
+    @Inject('Config') private shopName: string,
     private boyService: BoyService,
   ) {}
   @Get()
@@ -65,6 +67,7 @@ export class GirlController {
   }
   @Get('/test')
   test(): string {
-    return this.boyService.findAll();
+    // return this.boyService.findAll();
+    return this.shopName;
   }
 }
