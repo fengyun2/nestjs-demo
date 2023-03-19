@@ -1,3 +1,4 @@
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import {
   Controller,
   Get,
@@ -11,7 +12,9 @@ import {
 } from '@nestjs/common';
 import { GirlService } from './girl.service';
 import { BoyService } from './../boy/boy.service';
+import { CreateGirlDto } from './dto/create-girl.dto';
 
+@ApiTags('女孩')
 @Controller('girl')
 export class GirlController {
   constructor(
@@ -19,21 +22,25 @@ export class GirlController {
     @Inject('Config') private shopName: string,
     private boyService: BoyService,
   ) {}
+  @ApiOperation({ summary: '获取女孩列表' })
   @Get()
   getGirls(): any {
     return this.girlService.getGirls();
   }
+  @ApiOperation({ summary: '添加女孩' })
   @Post('/add')
-  addGirl(@Body() body): any {
+  addGirl(@Body() body: CreateGirlDto): any {
     console.log(body);
     return this.girlService.addGirl();
   }
+  @ApiOperation({ summary: '根据id获取女孩信息' })
   @Get('/getGirlById')
   getGirlById(@Query() query): any {
     // 因为通过 Get 放松传递过来的是字符串，所以我们需要用 parseInt 转化为数字
     const id: number = parseInt(query.id, 10);
     return this.girlService.getGirlById(id);
   }
+  @ApiOperation({ summary: '根据id或名称获取女孩信息' })
   @Get('/findGirlById/:id/:name')
   findGirlById(@Param() params, @Headers() header): any {
     console.log(params.name);
@@ -41,30 +48,36 @@ export class GirlController {
     const id: number = parseInt(params.id);
     return this.girlService.getGirlById(id);
   }
+  @ApiOperation({ summary: '根据id删除女孩' })
   @Get('/delete/:id')
   deleteGirl(@Param() params): any {
     const id: number = parseInt(params.id, 10);
     return this.girlService.delGirl(id);
   }
+  @ApiOperation({ summary: '根据id更新女孩信息' })
   @Get('/update/:id')
   updateGirl(@Param() params): any {
     const id: number = parseInt(params.id, 10);
     return this.girlService.updateGirl(id);
   }
+  @ApiOperation({ summary: '根据name模糊搜索' })
   @Get('findGirlByName/:name')
   findGirlByName(@Param() params): any {
     console.log(params.name);
     const name: string = params.name;
     return this.girlService.getGirlByName(name);
   }
+  @ApiOperation({ summary: '测试热更新' })
   @Get('/hotLoad')
   hotLoad(): any {
     return 'HotLoad Function';
   }
+  @ApiOperation({ summary: '测试跨域' })
   @Get('/corstest')
   corsTest(): object {
     return { code: 0, message: '测试跨域请求成功' };
   }
+  @ApiOperation({ summary: '测试注入' })
   @Get('/test')
   test(): string {
     // return this.boyService.findAll();
