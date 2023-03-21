@@ -14,6 +14,7 @@ import { GirlService } from './girl.service';
 import { BoyService } from './../boy/boy.service';
 import { CreateGirlDto } from './dto/create-girl.dto';
 import { UpdateGirlDto } from './dto/update-girl.dto';
+import { ParseArrayPipe } from '@nestjs/common';
 
 @ApiTags('女孩')
 @Controller('girl')
@@ -84,5 +85,31 @@ export class GirlController {
   test(): string {
     // return this.boyService.findAll();
     return this.shopName;
+  }
+  // TypeScript 不存储泛型或接口的原数据，因此当你在 DTO 中使用它们的时候， Validation 可能不能正确验证输入数据。如下：
+  // createBulk(@Body() girls: CreateGirlDto[])
+  // 要验证数组，创建了一个包裹了该数组的专用类，或者使用 ParseArrayPipe 。
+  // createBulk(
+  // @Body(new ParseArrayPipe({ items: CreateGirlDto })) girls: CreateGirlDto[],
+  // )
+  @ApiOperation({ summary: '批量创建' })
+  @Post('/createBulk')
+  // createBulk(@Body() girls: CreateGirlDto[]): any {
+  createBulk(
+    @Body(new ParseArrayPipe({ items: CreateGirlDto })) girls: CreateGirlDto[],
+  ): any {
+    console.log(girls);
+    // return this.girlService.addGirl(body);
+  }
+  // 此外, ParseArrayPipe 可能需要手动解析查询参数。
+  @ApiOperation({ summary: '批量查询' })
+  @Get('/findByIds')
+  findByIds(
+    @Query('ids', new ParseArrayPipe({ items: Number, separator: ',' }))
+    ids: number[],
+  ): any {
+    console.log(ids);
+    console.log(Array.isArray(ids)); //returns true
+    return 'This action returns users by ids';
   }
 }
