@@ -4,7 +4,10 @@ import * as cors from 'cors';
 import { HttpExceptionFilter } from './core/filter/http-exception/http-exception.filter';
 import { TransformInterceptor } from './core/interceptor/transform/transform.interceptor';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe } from './core/pipes/validation/validation.pipe';
+// 1. 使用自定义类验证器
+// import { ValidationPipe } from './core/pipes/validation/validation.pipe';
+// 2. 使用内置的 ValidationPipe
+import { ValidationPipe } from '@nestjs/common';
 
 function MiddleWareAll(req: any, res: any, next: any) {
   console.log('我是全局中间件...');
