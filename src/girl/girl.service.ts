@@ -61,15 +61,15 @@ export class GirlService {
     // return this.girl.delete(id);
   }
   // 修改一个女孩
-  async updateGirl(id: number): Promise<Girl> {
+  async updateGirl(id: number, body: Partial<Girl>): Promise<Girl> {
     const existGirl = await this.girl.findOne({ where: { id } });
     if (!existGirl) {
       throw new HttpException(`id为${id}的女孩不存在`, 401);
     }
-    const data = new Girl();
-    data.name = '王小丫';
-    data.age = 18;
-    const updateGirl = this.girl.merge(existGirl, data);
+    // const data = new Girl();
+    // data.name = '王小丫';
+    // data.age = 18;
+    const updateGirl = this.girl.merge(existGirl, body);
     return this.girl.save(updateGirl);
   }
   // 根据项目查找一个女孩的信息

@@ -15,10 +15,16 @@ Get http://localhost:3000/api/girl/getGirlById?id=1 HTTP/1.1
 GET http://localhost:3000/api/girl/findGirlById/2/QT HTTP/1.1
 
 ###
-GET http://localhost:3000/api/girl/delete/4 HTTP/1.1
+GET http://localhost:3000/api/girl/delete/uu HTTP/1.1
 
 ###
-GET http://localhost:3000/api/girl/update/1 HTTP/1.1
+GET http://localhost:3000/api/girl/update/2 HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{
+  "name": "刘亦菲",
+  "age": 15
+}
 
 ###
 GET http://localhost:3000/api/girl HTTP/1.1

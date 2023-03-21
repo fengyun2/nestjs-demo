@@ -13,6 +13,7 @@ import {
 import { GirlService } from './girl.service';
 import { BoyService } from './../boy/boy.service';
 import { CreateGirlDto } from './dto/create-girl.dto';
+import { UpdateGirlDto } from './dto/update-girl.dto';
 
 @ApiTags('女孩')
 @Controller('girl')
@@ -56,9 +57,10 @@ export class GirlController {
   }
   @ApiOperation({ summary: '根据id更新女孩信息' })
   @Get('/update/:id')
-  updateGirl(@Param() params): any {
+  updateGirl(@Param() params, @Body() body: UpdateGirlDto): any {
     const id: number = parseInt(params.id, 10);
-    return this.girlService.updateGirl(id);
+    console.log(id, body);
+    return this.girlService.updateGirl(id, body);
   }
   @ApiOperation({ summary: '根据name模糊搜索' })
   @Get('findGirlByName/:name')
