@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Body, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ReqLoginDto } from './dto/req-login.dto';
 import { LoginService } from './login.service';
 import { LocalAuthGuard } from '../../common/guards/local-auth.guard';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { AuthService } from '../system/auth/auth.service';
 import type { Request } from 'express';
 
@@ -23,5 +24,12 @@ export class LoginController {
   ): Promise<any> {
     // return req.user;
     return this.authService.login(req.user);
+  }
+
+  // jwt登录
+  @UseGuards(JwtAuthGuard)
+  @Get('/auth/profile')
+  getProfile(@Req() req: Request) {
+    return req.user;
   }
 }

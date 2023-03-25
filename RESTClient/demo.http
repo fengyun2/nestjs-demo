@@ -52,7 +52,7 @@ Content-Type: application/json; charset=utf-8
 ###
 GET http://localhost:3000/api/girl/findByIds?ids=1,2,3 HTTP/1.1
 
-# 用户登录
+# local用户登录
 ###
 POST http://localhost:3000/api/auth/login HTTP/1.1
 Content-Type: application/json; charset=utf-8
@@ -62,3 +62,13 @@ Content-Type: application/json; charset=utf-8
   "password": "changeme"
   # "password": "changeme_33"
 }
+
+# jwt获取用户信息（需要先执行/auth/login获取返回报文作为请求参数）
+# 1. 没参数时
+###
+GET http://localhost:3000/api/auth/profile HTTP/1.1
+
+# 2. 有参数时
+###
+GET http://localhost:3000/api/auth/profile HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJzdWIiOjEsImlhdCI6MTY3OTc2MDcxMiwiZXhwIjoxNjc5NzYwNzcyfQ.FlFRxLpZVqOAZaD03pgmmHv8UUwwXbGA1Dd_hO2QcZk
