@@ -11,7 +11,7 @@ import {
   Inject,
 } from '@nestjs/common';
 import { GirlService } from './girl.service';
-import { BoyService } from './../boy/boy.service';
+import { BoyService } from '../boy/boy.service';
 import { CreateGirlDto } from './dto/create-girl.dto';
 import { UpdateGirlDto } from './dto/update-girl.dto';
 import { ParseArrayPipe } from '@nestjs/common';

@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cors from 'cors';
-import { HttpExceptionFilter } from './core/filter/http-exception/http-exception.filter';
-import { TransformInterceptor } from './core/interceptor/transform/transform.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception/http-exception.filter';
+import { TransformInterceptor } from './common/interceptors/transform/transform.interceptor';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 // 1. 使用自定义类验证器
 // import { ValidationPipe } from './core/pipes/validation/validation.pipe';

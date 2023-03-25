@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { GirlModule } from './girl/girl.module';
+import { GirlModule } from './modules/system/girl/girl.module';
 // import { TypeOrmConfig } from './config/typeorm';
-import { BoyModule } from './boy/boy.module';
+import { BoyModule } from './modules/system/boy/boy.module';
 import configuration from './config/configuration';
 import { SharedModule } from './shared/shared.module';
 @Module({
