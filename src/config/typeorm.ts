@@ -1,3 +1,7 @@
+/**
+ * TODO: 注意，将从下个版本删除该配置！！
+ * mysql 连接配置
+ */
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 export const TypeOrmConfig = TypeOrmModule.forRoot({

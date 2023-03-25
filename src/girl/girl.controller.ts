@@ -21,7 +21,6 @@ import { ParseArrayPipe } from '@nestjs/common';
 export class GirlController {
   constructor(
     private girlService: GirlService,
-    @Inject('Config') private shopName: string,
     private boyService: BoyService,
   ) {}
   @ApiOperation({ summary: '获取女孩列表' })
@@ -79,12 +78,6 @@ export class GirlController {
   @Get('/corstest')
   corsTest(): object {
     return { code: 0, message: '测试跨域请求成功' };
-  }
-  @ApiOperation({ summary: '测试注入' })
-  @Get('/test')
-  test(): string {
-    // return this.boyService.findAll();
-    return this.shopName;
   }
   // TypeScript 不存储泛型或接口的原数据，因此当你在 DTO 中使用它们的时候， Validation 可能不能正确验证输入数据。如下：
   // createBulk(@Body() girls: CreateGirlDto[])
