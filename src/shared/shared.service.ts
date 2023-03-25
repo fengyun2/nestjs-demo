@@ -2,7 +2,7 @@
  * 公共方法
  */
 import { Injectable } from '@nestjs/common';
-// import axios from 'axios';
+import axios from 'axios';
 import * as iconv from 'iconv-lite';
 import { Request } from 'express';
 
@@ -49,15 +49,15 @@ export class SharedService {
   /* 通过ip获取地理位置 */
   async getLocation(ip: string) {
     if (this.IsLAN(ip)) return '内网IP';
-    // try {
-    //   let { data } = await axios.get(
-    //     `http://whois.pconline.com.cn/ipJson.jsp?ip=${ip}&json=true`,
-    //     { responseType: 'arraybuffer' },
-    //   );
-    //   data = JSON.parse(iconv.decode(data, 'gbk'));
-    //   return data.pro + ' ' + data.city;
-    // } catch (error) {
-    //   return '未知';
-    // }
+    try {
+      let { data } = await axios.get(
+        `http://whois.pconline.com.cn/ipJson.jsp?ip=${ip}&json=true`,
+        { responseType: 'arraybuffer' },
+      );
+      data = JSON.parse(iconv.decode(data, 'gbk'));
+      return data.pro + ' ' + data.city;
+    } catch (error) {
+      return '未知';
+    }
   }
 }
