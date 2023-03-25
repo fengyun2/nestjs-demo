@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import * as cors from 'cors';
 import { HttpExceptionFilter } from './common/filters/http-exception/http-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform/transform.interceptor';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { setupSwagger } from './setup-swagger';
 // 1. 使用自定义类验证器
 // import { ValidationPipe } from './core/pipes/validation/validation.pipe';
 // 2. 使用内置的 ValidationPipe
@@ -26,19 +26,11 @@ async function bootstrap() {
   // 注册全局拦截器
   app.useGlobalInterceptors(new TransformInterceptor());
 
-  // 设置swagger文档
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('管理后台')
-    .setDescription('管理后台接口文档')
-    .setVersion('1.0')
-    // .addBearerAuth()
-    .build();
-  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('docs', app, swaggerDocument);
-  // 文档访问地址：http://localhost:3000/docs
-
   // 注册管道验证dto
   app.useGlobalPipes(new ValidationPipe());
+
+  // 启动swagger
+  setupSwagger(app);
 
   await app.listen(3000);
 
