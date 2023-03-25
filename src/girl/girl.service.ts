@@ -9,7 +9,7 @@ export class GirlService {
   constructor(
     @InjectRepository(Girl) private readonly girl: Repository<Girl>,
   ) {}
-  getGirls(): any {
+  getGirls(): Promise<Girl[]> {
     // return {
     //   code: 0,
     //   data: ['翠花', '小红', '大丫'],
@@ -52,7 +52,7 @@ export class GirlService {
     // return reJson;
   }
   // 删除一个女孩
-  async delGirl(id: number) {
+  async delGirl(id: number): Promise<Girl> {
     const existGirl = await this.girl.findOne({ where: { id } });
     if (!existGirl) {
       throw new HttpException(`id为${id}的女孩不存在`, 401);
@@ -73,7 +73,7 @@ export class GirlService {
     return this.girl.save(updateGirl);
   }
   // 根据项目查找一个女孩的信息
-  getGirlByName(name: string) {
+  getGirlByName(name: string): Promise<Girl[]> {
     return this.girl.find({
       where: {
         name: Like(`%${name}%`),
