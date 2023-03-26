@@ -2,10 +2,12 @@
  * 公共模块
  */
 
+import { APP_GUARD } from '@nestjs/core';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SharedService } from './shared.service';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 
 @Global()
 @Module({
@@ -31,6 +33,13 @@ import { SharedService } from './shared.service';
     }),
   ],
   controllers: [],
-  providers: [SharedService],
+  providers: [
+    SharedService,
+    // jwt守卫
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class SharedModule {}

@@ -5,6 +5,7 @@ import { LoginService } from './login.service';
 import { LocalAuthGuard } from '../../common/guards/local-auth.guard';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { AuthService } from '../system/auth/auth.service';
+import { Public } from '../../common/decorators/public.decorator';
 import type { Request } from 'express';
 
 @ApiTags('登录')
@@ -17,6 +18,7 @@ export class LoginController {
 
   // 用户登录
   @Post('/auth/login')
+  @Public()
   @UseGuards(LocalAuthGuard)
   async login(
     @Body() reqLoginDto: ReqLoginDto,
@@ -27,6 +29,7 @@ export class LoginController {
   }
 
   // jwt登录
+  @Public()
   @UseGuards(JwtAuthGuard)
   @Get('/auth/profile')
   getProfile(@Req() req: Request) {
