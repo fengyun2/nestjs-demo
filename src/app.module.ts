@@ -9,6 +9,7 @@ import { AuthModule } from './modules/system/auth/auth.module';
 import { UsersService } from './modules/system/users/users.service';
 import { UsersModule } from './modules/system/users/users.module';
 import { LoginModule } from './modules/login/login.module';
+import { DictModule } from './modules/system/dict/dict.module';
 @Module({
   imports: [
     // 配置文件模块
@@ -27,6 +28,7 @@ import { LoginModule } from './modules/login/login.module';
     AuthModule,
     UsersModule,
     LoginModule,
+    DictModule,
   ],
   controllers: [],
   providers: [UsersService],

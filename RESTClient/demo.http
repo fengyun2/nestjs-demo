@@ -1,4 +1,6 @@
-@AccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJzdWIiOjEsImlhdCI6MTY3OTgwMjg0NywiZXhwIjoxNjc5ODAyOTA3fQ.VR70n-5AD4-L-eTWpHp3H9WNVZO5F-Y5GkRi1NYs0x4
+
+@API_PREFIX= http://localhost:3000/api/
+@AccessToken = {{loginAdmin.response.body.$.data.access_token}}
 @Authorization = Bearer {{AccessToken}}
 @ContentType = application/json; charset=utf-8
 
@@ -68,6 +70,7 @@ Authorization: {{Authorization}}
 
 # local用户登录
 ###
+# @name loginAdmin
 POST http://localhost:3000/api/auth/login HTTP/1.1
 Content-Type: {{ContentType}}
 
@@ -86,3 +89,45 @@ GET http://localhost:3000/api/auth/profile HTTP/1.1
 ###
 GET http://localhost:3000/api/auth/profile HTTP/1.1
 Authorization: {{Authorization}}
+
+
+
+# 以下是dict服务-start
+
+###
+POST {{API_PREFIX}}dict/type HTTP/1.1
+Content-Type: {{ContentType}}
+Authorization: {{Authorization}}
+
+# {
+#   "dictId": 1,
+#   "dictName": "系统开关",
+#   "dictType": "sys_normal_disable",
+#   "status": "0",
+#   "remark": "系统开关列表"
+#   # "createTime": "2023-03-06 17:19:55.785151",
+#   # "updateTime": "2023-03-06 17:19:55.785151",
+#   # "createBy": "john",
+#   # "updateBy": "john"
+# }
+
+# {
+#   "dictId": 2,
+#   "dictName": "系统是否",
+#   "dictType": "sys_yes_no",
+#   "status": "0",
+#   "remark": "系统是否列表"
+# }
+
+{
+  "dictId": 3,
+  "dictName": "通知类型",
+  "dictType": "sys_notice_type",
+  "status": "0",
+  "remark": "通知类型列表"
+}
+
+###
+GET {{API_PREFIX}}dict/type/list HTTP/1.1
+Authorization: {{Authorization}}
+# dict服务-end
